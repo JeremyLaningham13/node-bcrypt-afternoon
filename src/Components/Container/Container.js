@@ -20,34 +20,42 @@ export default class Container extends Component {
 
   getDragonTreasure() {
     axios
-    .get('/api/treasuer/dragon')
-    .then (treasure () {
-      this.setState({
-        treasures: {
-          ...this.state.treasures,
-          dragon: treasure.data;
-        };
-      });
-    })
-    .catch(error => console.log(error));
+      .get('/api/treasure/dragon')
+      .then(treasure => {
+        this.setState({
+          treasures: {
+            ...this.state.treasures,
+            dragon: treasure.data,
+          },
+        });
+      })
+      .catch(error => console.log(error));
   }
 
   getAllTreasure() {
-    // axios GET to /api/treasure/all here
+    axios.get('/api/treasure/all')
+    .then( treasure => {
+      this.setState({
+        treasures: {
+          ...this.state.treasures,
+          all: treasure.data
+        }
+      })
+    }).catch( error => alert(error.response.request.response))
   }
 
   getMyTreasure() {
     axios
-    .get('/api/treasure/user')
-    .then(treasure => {
-      this.setState({
-        treasures: {
-          ...this.state.treasures,
-          user: treasure.data,
-        };
-      });
-    })
-    .catch(error => alert(error.response.request.response))
+      .get('/api/treasure/user')
+      .then(treasure => {
+        this.setState({
+          treasures: {
+            ...this.state.treasures,
+            user: treasure.data,
+          },
+        });
+      })
+      .catch(error => alert(error.response.request.response));
   }
 
   addMyTreasure(newMyTreasure) {
