@@ -16,7 +16,7 @@ module.exports = {
     req.session.user = { isAdmin: user.is_admin, username: user.username, id: user.id };
     return res.status(201).send(req.session.user);
   },
-  
+
   login: async (req, res) => {
     const { username, password } = req.body;
     const foundUser = await req.app.get('db').get_user([username]);
@@ -31,9 +31,9 @@ module.exports = {
     req.session.user = { isAdmin: user.is_admin, id: user.id, username: user.username };
     return res.send(req.session.user);
   },
-
+  
   logout: (req, res) => {
-      req.session.destroy();
-      return res.sendStatus(200);
+    req.session.destroy();
+    return res.sendStatus(200);
   }
 };

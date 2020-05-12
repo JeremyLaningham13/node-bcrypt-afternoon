@@ -8,7 +8,7 @@ const auth = require('./middleware/authMiddleware')
 
 // const PORT = 4000;
 
-const { SESSION_SECRET, CONNECTION_STRING, PORT } = process.env;
+const { SESSION_SECRET, CONNECTION_STRING, SERVER_PORT } = process.env;
 
 const app = express();
 
@@ -36,4 +36,4 @@ app.get('/api/treasure/user', auth.usersOnly, treasureCtrl.getUserTreasure);
 app.post('/api/treasure/user', auth.usersOnly, treasureCtrl.addUserTreasure);
 app.get('/api/treasure/all', auth.usersOnly, auth.adminsOnly, treasureCtrl.getAllTreasure)
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+app.listen(SERVER_PORT, () => console.log(`Listening on PORT ${SERVER_PORT}`));

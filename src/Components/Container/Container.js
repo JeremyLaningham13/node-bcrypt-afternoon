@@ -1,75 +1,78 @@
-import React, { Component } from 'react';
-import './Container.css';
-import Treasure from '../Treasure';
-import axios from 'axios';
+  
+import React, { Component } from "react";
+import axios from "axios";
+import "./Container.css";
+import Treasure from "../Treasure";
 
 export default class Container extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       treasures: {},
-    }
-    this.addMyTreasure = this.addMyTreasure.bind(this)
+    };
+    this.addMyTreasure = this.addMyTreasure.bind(this);
   }
-
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      this.setState({ treasures: {} })
+      this.setState({ treasures: {} });
     }
   }
-
   getDragonTreasure() {
     axios
-      .get('/api/treasure/dragon')
-      .then(treasure => {
+      .get("/api/treasure/dragon")
+      .then((treas) => {
         this.setState({
           treasures: {
             ...this.state.treasures,
-            dragon: treasure.data,
+            dragon: treas.data,
           },
         });
       })
-      .catch(error => console.log(error));
+      .catch(() => {
+        console.log("error getting dragon treasure");
+      });
   }
-
   getAllTreasure() {
-    axios.get('/api/treasure/all')
-    .then( treasure => {
-      this.setState({
-        treasures: {
-          ...this.state.treasures,
-          all: treasure.data
-        }
+    axios
+      .get("/api/treasure/all")
+      .then((response) => {
+        this.setState({
+          treasures: {
+            ...this.state.treasures,
+            all: response.data,
+          },
+        });
       })
-    }).catch( error => alert(error.response.request.response))
+      .catch((err) => {
+        alert(err.response.request.response);
+      });
   }
-
   getMyTreasure() {
     axios
-      .get('/api/treasure/user')
-      .then(treasure => {
+      .get("/api/treasure/user")
+      .then((response) => {
         this.setState({
           treasures: {
             ...this.state.treasures,
-            user: treasure.data,
+            user: response.data,
           },
         });
       })
-      .catch(error => alert(error.response.request.response));
+      .catch((err) => {
+        alert(err.response.request.response);
+      });
   }
-
   addMyTreasure(newMyTreasure) {
     this.setState({
       treasures: {
         ...this.state.treasures,
         user: newMyTreasure,
       },
-    })
+    });
   }
-
   render() {
-    const { username } = this.props.user
-    const { dragon, user, all } = this.state.treasures
+    const { username } = this.props.user;
+    const { dragon, user, all } = this.state.treasures;
     return (
       <div className="Container">
         {dragon ? (
@@ -131,6 +134,6 @@ export default class Container extends Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }
